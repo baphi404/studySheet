@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Programmieren",
+        "sws": "4 Stunden"
+    },
+    {
+        "name": "Mathe",
+        "sws": "4 Stunden"
+    },
+    {
+        "name": "Recht",
+        "sws": "2 Stunden"
+    }
+]

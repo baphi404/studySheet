@@ -1,0 +1,167 @@
+body{
+    font-family: 'Fredoka';
+    background-color: #EAEDF8;
+    margin: 0;
+}
+
+.flex{
+    display: flex;
+}
+
+.menue{
+width: 20%;
+background-color: rgb(209, 145, 61);
+margin-right: 32px;
+padding-top: 150px;
+height: 100vh;
+}
+.menue a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding:  20px;
+    display: flex;
+    align-items: center;
+}
+.menue img{
+    margin-right: 8px;
+}
+.play_button{
+    height: 32px;
+    width: 32px;
+}
+
+.menue a:hover{
+    background-color: rgb(255, 255, 255, 0.3);
+}
+.content{
+width: 80%;
+margin-top: 150px;
+margin-right: 32px;
+background-color: white;
+border-radius: 8px;
+padding: 8px;
+box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.3);
+}
+
+.menubar{
+    background-color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 80px;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0, 0.3);
+    padding-left: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+.avatar{
+border-radius: 100%;
+background: yellowgreen;
+padding: 16px;
+width: 20px;
+height: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+margin-right: 10px;
+}
+.myname{
+display: flex;
+margin-right: 50px;
+align-items: center;
+}
+
+.card{
+background-color: rgba(0, 0, 0, 0.1);
+margin-bottom: 16px;
+margin-top: 8px;
+border-radius: 8px;
+padding: 16px;
+padding-left: 64px;
+position: relative;
+
+}
+.book_icon{
+width: 48px;
+height: 48px;
+position: absolute;
+left: 8px;
+top: 10px;
+}
+.submit-button{
+    background-color: rgb(212, 191, 122);
+    padding: 4px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 4px;
+    position: absolute;
+    top: 35%;
+    right: 25%;
+}
+.submit-button:hover{
+    background-color: rgb(184, 159, 48);
+}
+.delete-button{
+    background-color: rgba(216, 88, 37, 0.733);
+    padding: 4px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 4px;
+    position: absolute;
+    top: 35%;
+    right: 10%;
+}
+.delete-button:hover{
+    background-color: rgb(206, 60, 15);
+}
+
+.answer_View{
+    background-color: rgba(189, 18, 18, 0.1);
+    margin-bottom: 16px;
+    margin-top: 8px;
+    border-radius: 8px;
+    padding: 16px;
+    padding-left: 64px;
+    position: relative;
+    visibility: hidden;
+    
+    }
+.pair{
+    background-color: rgb(81, 12, 207, 0.1);
+}
+.quest_View{
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    margin-top: 8px;
+    border-radius: 8px;
+    padding: 16px;
+    padding-left: 64px;
+    position: relative;
+    
+    }
+.control_Modul{
+     background-color: rgb(15, 27, 202, 0.1);
+     width: 200px;
+     height: 200px;
+ }
+.control_Modul .submit-button{
+    background-color: rgb(19, 16, 9);
+    padding: 4px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border-radius: 4px;
+    position: relative;
+}
+.control_Modul .submit-button:hover{
+    background-color: rgb(184, 159, 48);
+}
+
+.footer {
+    padding: 100px;
+    text-align: center;
+    background-color: #343434;
+    color: rgb(127, 134, 139);
+    margin-top: 300px;
+}
