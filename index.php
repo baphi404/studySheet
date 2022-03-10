@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -115,6 +116,8 @@
             } else {
                 echo 'Du bist auf der Startseite !';
             }
+
+            echo "<script src='script.js'></script>";
             ?>
         </div>
     </div>

@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -119,6 +120,7 @@
                 <form action = '?page=start&next=true&start=1' method = 'POST'>
                 <button type='button' name='next_btn'>Next !</button>
                 </form>
+                <button id='btn' >Next Card !</button>
                 </div>
                 ";
             }
@@ -183,7 +185,6 @@
         (C) 2022 Developer Basler
     </div>
 
-    <script src="card_Request.js"></script>
 </body>
 
 </html>
