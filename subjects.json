@@ -10,5 +10,9 @@
     {
         "name": "Recht",
         "sws": "2 Stunden"
+    },
+    {
+        "name": "Netzwerktechnik",
+        "sws": "2 Stunden"
     }
 ]

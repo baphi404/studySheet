@@ -33,9 +33,9 @@
             $headline = 'Herrzlich Willkommen';
             $subjects = [];
 
-            if (file_exists('subjects.txt')) {
+            if (file_exists('subjects.json')) {
 
-                $text = file_get_contents('subjects.txt', true);
+                $text = file_get_contents('subjects.json', true);
                 $subjects = json_decode($text, true); /* from text to array */
             }
 
@@ -46,7 +46,7 @@
                     'sws' => $_POST['sws'],
                 ];
                 array_push($subjects, $newSubject);
-                file_put_contents('subjects.txt', json_encode($subjects, JSON_PRETTY_PRINT)); /* from array into text */
+                file_put_contents('subjects.json', json_encode($subjects, JSON_PRETTY_PRINT)); /* from array into text */
                 echo 'Fach <b>' . $_POST['name'] . '</b> wurde hinzugefügt';
             }
             if ($_GET['page'] == 'delete') {
@@ -69,7 +69,7 @@
 
                 $key = $_GET['delete']; //Index holen
                 unset($subjects[$key]); // Eintrag löschen
-                file_put_contents('subjects.txt',json_encode($subjects,  JSON_PRETTY_PRINT));
+                file_put_contents('subjects.json',json_encode($subjects,  JSON_PRETTY_PRINT));
             }
             // Eintrag anzeigen
             elseif ($_GET['page'] == 'subject') {

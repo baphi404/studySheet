@@ -12,7 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500&family=Montserrat:wght@100&display=swap" rel="stylesheet">
-    <script src="card_Request.js"></script>
 </head>
 
 <body>
@@ -37,9 +36,9 @@
             $cards = [];
             static $JSON_Index = 1;
 
-            if (file_exists('word_pair.txt')) {
+            if (file_exists('word_pair.json')) {
 
-                $text = file_get_contents('word_pair.txt', true);
+                $text = file_get_contents('word_pair.json', true);
                 $cards = json_decode($text, true); /* from JSON to array */
             }
 
@@ -51,7 +50,7 @@
                     'answer' => $_POST['answer'],
                 ];
                 array_push($cards, $newCard);
-                file_put_contents('word_pair.txt', json_encode($cards, JSON_PRETTY_PRINT)); /* from array into JSON (text) */
+                file_put_contents('word_pair.json', json_encode($cards, JSON_PRETTY_PRINT)); /* from array into JSON (text) */
                 echo 'Wortpaar <b>' . $_POST['question'] . '</b> wurde hinzugefügt';
             }
 
@@ -103,7 +102,7 @@
 
                 $key = $_GET['delete']; //Index holen
                 unset($cards[$key]); // Eintrag löschen
-                file_put_contents('word_pair.txt', json_encode($cards,  JSON_PRETTY_PRINT));
+                file_put_contents('word_pair.json', json_encode($cards,  JSON_PRETTY_PRINT));
             }
          
             // Abfrage starten
@@ -117,21 +116,22 @@
                 <a class= '' name='next' href= 'card_View.php?page=start&next=true&start=$JSON_Index'>Nächste</a>
                 <a class= '' href= 'card_View.php?page=start'>Zurück</a>
                
-            
-                <button type='button' onclick ='hello()' name='next_btn'>Next !</button>
-            
+                <form action = '?page=start&next=true&start=1' method = 'POST'>
+                <button type='button' name='next_btn'>Next !</button>
+                </form>
                 </div>
                 ";
             }
-                //print_r($cards);
+                print_r($cards);
                 function nextCard ($arr, $index) {
                    
-                        echo $arr[$index]['question'] . '<br>';
-                        echo  $index . ' = index <br>';
+                        echo $arr[$index]['question'] . '<br><br>';
+                        echo  $index . ' = index <br><br>';
                         echo count($arr);
+                        echo "<div id='debug'></div>";
                       
                 } 
-                //nextCard($cards, $JSON_Index);
+                nextCard($cards, $JSON_Index);
                 $JSON_Index = $JSON_Index + 1;
                 //echo $cards[1]['answer'];
                 
@@ -175,7 +175,7 @@
                 </form>
                 ";
             }
-            
+            echo "<script src='script.js'></script>";
             ?>
         </div>
     </div>
