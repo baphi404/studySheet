@@ -31,8 +31,19 @@
         </div>
         <div class="content">
             <?php
+            error_reporting(0);
             $headline = 'Herrzlich Willkommen';
             $subjects = [];
+            
+            $severname = 'localhost';
+            $user = 'root';
+            $pw = '';
+
+            $con = new mysqli($severname, $user, $pw);
+            if ($con ->connect_error) {
+                die('ACHTUNG FEHLER !!!' . $con->connect_error);
+            }
+            echo 'Connection successfull';
 
             if (file_exists('subjects.json')) {
 

@@ -32,18 +32,41 @@
         </div>
         <div class="content">
             <?php
-            error_reporting(E_ALL);
+            error_reporting(E_ALL ^ E_WARNING);
             $headline = 'Herrzlich Willkommen';
             $cards = [];
-            static $JSON_Index = 1;
+
+            
+            $severname = 'localhost';
+            $user = 'root';
+            $pw = '';
+            $db_name = 'dateikarten';
+
+            function saveCard($severname, $user, $pw, $db_name){
+
+            if ($_POST['question'] != Null && $_POST['answer'] != Null ) {
+         
+                $con = new mysqli($severname, $user, $pw, $db_name);
+
+                $question = $_POST['question'];
+                $answer  = $_POST['answer'];
+
+                $sql = "INSERT INTO wortpaare (Question, Answer) VALUES ('$question', '$answer')";
+                $con->query($sql);
+
+                $con->close();
+            }
+        }
+            
+/*
 
             if (file_exists('word_pair.json')) {
 
                 $text = file_get_contents('word_pair.json', true);
                 $cards = json_decode($text, true); /* from JSON to array */
-            }
+  //          }
 
-
+/*
             if (isset($_POST['question']) && isset($_POST['answer'])) {
 
                 $newCard = [
@@ -52,8 +75,8 @@
                 ];
                 array_push($cards, $newCard);
                 file_put_contents('word_pair.json', json_encode($cards, JSON_PRETTY_PRINT)); /* from array into JSON (text) */
-                echo 'Wortpaar <b>' . $_POST['question'] . '</b> wurde hinzugefügt';
-            }
+              //  echo 'Wortpaar <b>' . $_POST['question'] . '</b> wurde hinzugefügt';
+           // }
 
             
             if ($_GET['page'] == 'card') {
@@ -120,7 +143,7 @@
                 <form action = '?page=start&next=true&start=1' method = 'POST'>
                 <button type='button' name='next_btn'>Next !</button>
                 </form>
-                <button id='btn' >Next Card !</button>
+                <button id='btn' onclick='nextCard()'>Next Card !</button>
                 </div>
                 ";
             }
@@ -173,11 +196,15 @@
                 <input placeholder = 'Antwort eingeben' name = 'answer'>
                 </div>
 
-                <button type = 'submit'> Absenden </button>
+                <button type = 'submit' name='submit'> Absenden </button>
                 </form>
                 ";
             }
             echo "<script src='script.js'></script>";
+            if (isset($_POST['submit'])) {
+                saveCard($severname, $user, $pw, $db_name);
+            }
+            
             ?>
         </div>
     </div>
