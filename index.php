@@ -24,6 +24,7 @@
     </div>
     <div class="flex">
         <div class="menue">
+            <!-- https://icons8.de/icons/set/l%C3%B6sung -->
             <a href="index.php?page=home"><img src="img/home.svg"> Start</a>
             <a href="index.php?page=subject"><img src="img/book.svg"> Fächer</a>
             <a href="index.php?page=addsubject"><img src="img/add.svg"> Fächer hinzufügen</a>
@@ -128,7 +129,7 @@
                 echo 'Du bist auf der Startseite !';
             }
 
-            echo "<script src='script.js'></script>";
+            //echo "<script src='script.js'></script>";
             ?>
         </div>
     </div>

@@ -143,8 +143,7 @@ top: 10px;
     }
 .control_Modul{
      background-color: rgb(15, 27, 202, 0.1);
-     width: 200px;
-     height: 200px;
+    
  }
 .control_Modul .submit-button{
     background-color: rgb(19, 16, 9);

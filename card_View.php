@@ -32,6 +32,9 @@
         </div>
         <div class="content">
             <?php
+
+use function PHPSTORM_META\elementType;
+
             error_reporting(E_ALL ^ E_WARNING);
             $headline = 'Herrzlich Willkommen';
             $cards = [];
@@ -57,28 +60,122 @@
                 $con->close();
             }
         }
+
+        function showAllCards ($severname, $user, $pw, $db_name) {
+
+            $con = new mysqli($severname, $user, $pw, $db_name);
+
+            $sql = "SELECT * From wortpaare";
+            $ret = $con->query($sql);
+            if ($ret->num_rows > 0) {
+                while ($i  = $ret->fetch_assoc()) {
+                    echo "<div class= 'card'>
+                       <img class='book_icon' src = 'img/book2.png'>
+                        <b>" . $i['Question'] . "</b><br>"
+                        . $i['Answer'] . "</b><br>
+                        
+                        <a class= 'submit-button' href= 'card_View.php?page=card'>Bestätigen</a>
+                        <a class= 'delete-button' name='delete_btn' href='?page=delete&delete=". $i['ID'] ."'>Löschen</a>
+                    </div>
+                    ";
+                }
+            }
+            else {
+                echo 'Da ist etwas schief gelaufen' .$con->error;
+            }
+            $con->close();
+        }
+        function showCards ($severname, $user, $pw, $db_name) {
+
+            $con = new mysqli($severname, $user, $pw, $db_name);
+
+            $sql = "SELECT * From wortpaare";
+            //$sql = "SELECT * From wortpaare ORDER BY RAND()";     
+            $ret = $con->query($sql);
+            $con->close();
+            return $ret;
+        }
+        function size ($severname, $user, $pw, $db_name) {
+
+            $con = new mysqli($severname, $user, $pw, $db_name);
+
+            $sql = "SELECT Count(*) From wortpaare";
+            //$sql = "SELECT * From wortpaare ORDER BY RAND()";     
+            $ret = $con->query($sql);
+            $con->close();
+            return $ret;
+        }
+
+        function deleteCard($severname, $user, $pw, $db_name){
+         
+                $con = new mysqli($severname, $user, $pw, $db_name);
+
+                $id = $_GET['delete']; //Index holen
+                echo '<br>ID =' . $id;
+                $sql = "DELETE FROM wortpaare WHERE ID = '". $id . "'"; // Eintrag löschen
+
+                $con->query($sql);  // execute SQL-Command
+
+                $con->close();   
+        }
+        function showFirstQuestion ($severname, $user, $pw, $db_name) {
+
+            $con = new mysqli($severname, $user, $pw, $db_name);
+
+            $sql = "SELECT * From wortpaare";
+            //$sql = "SELECT * From wortpaare ORDER BY RAND()";
+            $ret = $con->query($sql);
+            if ($ret->num_rows > 0) {
+                if ($i  = $ret->fetch_assoc()) {
+                    echo "<div class= 'card'>
+                    <img class='book_icon' src = 'img/book2.png'>
+                    <b> Frage : </b></br>" . $i['Question'] . "<br>
+                       
+                    </div>
+                    ";
+                }
+                
+            }
+            else {
+                echo 'Da ist etwas schief gelaufen' .$con->error;
+            }
+            $con->close();
+            return $ret;
+        }
+        function showFirstQuest ($ret) {
+
+            if ($ret->num_rows > 0) {
+                if ($i  = $ret->fetch_assoc()) {
+                    echo "<div class= 'card'>
+                    <img class='book_icon' src = 'img/book2.png'>
+                    <b> Frage : </b></br>" . $i['Question'] . "<br>
+                       
+                    </div>
+                    ";
+                }
+                
+            }
+            else {
+                echo 'Da ist etwas schief gelaufen';
+            }
             
-/*
+        }
 
-            if (file_exists('word_pair.json')) {
+        function showAnswer ($ret) {
 
-                $text = file_get_contents('word_pair.json', true);
-                $cards = json_decode($text, true); /* from JSON to array */
-  //          }
-
-/*
-            if (isset($_POST['question']) && isset($_POST['answer'])) {
-
-                $newCard = [
-                    'question' => $_POST['question'],
-                    'answer' => $_POST['answer'],
-                ];
-                array_push($cards, $newCard);
-                file_put_contents('word_pair.json', json_encode($cards, JSON_PRETTY_PRINT)); /* from array into JSON (text) */
-              //  echo 'Wortpaar <b>' . $_POST['question'] . '</b> wurde hinzugefügt';
-           // }
-
-            
+            if ($ret->num_rows > 0) {
+                if ($i  = $ret->fetch_assoc()) {
+                    echo "<div class= 'card'>
+                    <b> Antwort : </b></br>" . $i['Answer'] . "<br>
+                       
+                    </div>
+                    ";
+                }
+            }
+            else {
+                echo 'Da ist etwas schief gelaufen';
+            }
+        }    
             if ($_GET['page'] == 'card') {
                 $headline = 'Deine Karteikarten';
                 echo '<h1>' . $headline . '</h1>';
@@ -102,87 +199,30 @@
                 echo '<h1>' . $headline . '</h1>';
                 echo 'Du bist auf der Startseite !';
             }
-            // Eintrag anzeigen
-            if ($_GET['page'] == 'card') {
-
-                foreach ($cards as $key => $row) {
-                    $question = $row['question'];
-                    $answer = $row['answer'];
-                    echo "<div class= 'card'>
-                       <img class='book_icon' src = 'img/book2.png'>
-                        <b>$question</b><br>
-                        $answer
-                    
-                        <a class= 'submit-button' href= 'card_View.php?page=card'>Bestätigen</a>
-                        <a class= 'delete-button' href='?page=delete&delete=$key'>Löschen</a>
-
-                    </div>
-                    ";
-                }
-            }
-            // Eintrag löschen
-            elseif ($_GET['page'] == 'delete') {
-                echo  'Dein <b>Karte</b> wurde gelöscht';
-
-                $key = $_GET['delete']; //Index holen
-                unset($cards[$key]); // Eintrag löschen
-                file_put_contents('word_pair.json', json_encode($cards,  JSON_PRETTY_PRINT));
-            }
          
             // Abfrage starten
 
-            elseif ($_GET['page'] == 'start') {
+            if ($_GET['page'] == 'start') {
 
                 $random_cards = $cards;
                 shuffle($random_cards); 
                 echo "<div class='control_Modul'>Hier ist das Control-Modul
-                <a class= '' href= 'card_View.php?page=start'>Lösung</a>
+                <a class= '' href= 'card_View.php?page=start&start=true'>Start</a>
+                <a class= '' href= 'card_View.php?page=start&start=answer'>Lösung</a>
                 <a class= '' name='next' href= 'card_View.php?page=start&next=true&start=$JSON_Index'>Nächste</a>
                 <a class= '' href= 'card_View.php?page=start'>Zurück</a>
-               
-                <form action = '?page=start&next=true&start=1' method = 'POST'>
-                <button type='button' name='next_btn'>Next !</button>
+    
+                <form action = '?page=start' method = 'POST'>
+                <button type='submit' name='start_btn'>Start !</button>
+                <button type='submit' name='next_btn'>Next !</button>
+                <button type='submit' name='answer_btn'>Lösung</button>
                 </form>
-                <button id='btn' onclick='nextCard()'>Next Card !</button>
+
+            
                 </div>
                 ";
             }
-                print_r($cards);
-                function nextCard ($arr, $index) {
-                   
-                        echo $arr[$index]['question'] . '<br><br>';
-                        echo  $index . ' = index <br><br>';
-                        echo count($arr);
-                        echo "<div id='debug'></div>";
-                      
-                } 
-                nextCard($cards, $JSON_Index);
-                $JSON_Index = $JSON_Index + 1;
-                //echo $cards[1]['answer'];
                 
-
-                
-/*
-                foreach ($cards as $row) {
-                    
-                    $question = $row['question'];
-                    $answer = $row['answer'];
-                    echo "
-                    <div class='pair'>
-                    <div class= 'quest_View'>
-                        <b>Frage: </b> <br>    
-                        $question<br>
-                        
-                    </div>
-                    <div class= 'answer_View'>
-                        <b>Antwort: </b> <br>  
-                        $answer<br>
-                        
-                    </div>
-                    </div>
-                    ";
-                }
-                */                 
             ?>
             <?php
             if ($_GET['page'] == 'addcard') {
@@ -200,9 +240,61 @@
                 </form>
                 ";
             }
-            echo "<script src='script.js'></script>";
+            //echo "<script src='script.js'></script>";
+            // Funktionsaufrufe
+            
+            if (isset($_POST['start_btn'])) {
+                $CardOutput = showCards($severname, $user, $pw, $db_name);
+                echo ' Return = ' .gettype($CardOutput);
+                //print_r($CardOutput);
+           }
+            // Post new entry
             if (isset($_POST['submit'])) {
                 saveCard($severname, $user, $pw, $db_name);
+            }
+            // start Request
+            /*
+            if ($_GET['page'] == 'start' && $_GET['start'] == 'true') {
+                $CardOutput =  showFirstQuestion($severname, $user, $pw, $db_name);
+            }
+            */
+            if (isset($_POST['next_btn'])) {
+            	//showFirstQuest($CardOutput);
+                $size = size($severname, $user, $pw, $db_name);
+                $size = mysqli_fetch_array($size);
+                $counter = 0;
+               // echo 'Länge = ' . $size[0];
+                if ($counter < $size[0]) {
+                
+                //$CardOutput->fetch_array();
+                echo ' Return = ' .gettype($CardOutput);
+                $row = $CardOutput->fetch_assoc();
+                echo '<br> Hier steht die Cards: <br> Question = ' . $row['Question'] .'<br>';
+               
+                echo '<br> Answer =  ' . $row['Answer'].'<br>';  
+                $counter++; 
+                }
+            }
+            // show Answer
+            /*
+            if ($_GET['page'] == 'start' && $_GET['start'] == 'answer') {
+                showAnswer($severname, $user, $pw, $db_name);
+            }
+            */
+            if (isset($_POST['answer_btn'])) {
+                //showAnswer($severname, $user, $pw, $db_name);
+                showFirstQuest($CardOutput);
+                showAnswer($CardOutput);
+            }
+            // Einträge anzeigen
+            if (($_GET['page'] == 'card')) {
+               showAllCards($severname, $user, $pw, $db_name);
+            }
+             // Eintrag löschen
+             
+             if ($_GET['page'] == 'delete') {
+                echo  'Dein <b>Karte</b> wurde gelöscht';
+                deleteCard($severname, $user, $pw, $db_name);
             }
             
             ?>
